@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import trianglify from 'trianglify'
-import { PresetColor } from './config'
+// import trianglify from 'trianglify'
 
 const wrap = ref<HTMLElement>()
+const dpr = window.devicePixelRatio || 1
 const width = ref(500)
 const height = ref(500)
+const trianglify = (window as any).trianglify
 
+const presetColor = trianglify.utils.colorbrewer
 function genImg() {
   const pattern = trianglify({
     width: width.value,
@@ -14,7 +16,7 @@ function genImg() {
     cellSize: 75,
     variance: 0.75,
     seed: null,
-    xColors: PresetColor.Blues,
+    xColors: presetColor.Blues,
     yColors: 'match',
     fill: true,
     palette: trianglify.colorbrewer,
@@ -23,10 +25,10 @@ function genImg() {
     strokeWidth: 0,
     points: null,
   })
-
+  const canvas = pattern.toCanvas()
   while (wrap.value?.firstChild)
     wrap.value?.removeChild(wrap.value.firstChild)
-  wrap.value?.appendChild((pattern as any).toCanvas())
+  wrap.value?.appendChild(canvas)
 }
 
 watch([width, height] as const, () => {
@@ -44,7 +46,7 @@ function handleExport() {
     image.src = dataURL
     const link = document.createElement('a')
     link.href = dataURL
-    link.download = `${width.value}x${height.value}.png`
+    link.download = `${width.value * dpr}x${height.value * dpr}.png`
     link.click()
   }
 }
