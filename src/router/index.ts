@@ -27,7 +27,7 @@ const router = createRouter({
 
 const commonTitle = '在线小工具'
 router.beforeEach((to, from, next) => {
-  if (to.meta.title)
+  if (from && to.meta.title)
     document.title = `${to.meta.title} - ${commonTitle}` as string
   else document.title = commonTitle
   next()
