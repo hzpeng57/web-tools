@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
     name: RouteNames.GenImage,
     component: GenImage,
     meta: {
-      title: '1',
+      title: '图片生成器',
     },
   },
 ]
@@ -23,6 +23,14 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+const commonTitle = '在线小工具'
+router.beforeEach((to, from, next) => {
+  if (to.meta.title)
+    document.title = `${to.meta.title} - ${commonTitle}` as string
+  else document.title = commonTitle
+  next()
 })
 
 export default router
