@@ -64,10 +64,10 @@ function handleSelectColor(key: any) {
   <div class="gen-image flex">
     <div class="gen-image__left flex-shrink-0 p-4 bg-white">
       <div class="flex gap-4">
-        <v-text-field v-model="width" label="宽度" variant="solo-filled" />
-        <v-text-field v-model="height" label="高度" variant="solo-filled" />
+        <v-text-field v-model="width" label="宽度" variant="outlined" />
+        <v-text-field v-model="height" label="高度" variant="outlined" />
       </div>
-      <VBtn block class="my-4" @click="genImg">
+      <VBtn block size="large" class="mb-4" @click="genImg">
         生成
       </VBtn>
       <div
