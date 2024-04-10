@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
+import { VBtn } from 'vuetify/components/VBtn'
 
 const trianglify = (window as any).trianglify
 const presetColor = trianglify.utils.colorbrewer
@@ -63,26 +64,12 @@ function handleSelectColor(key: any) {
   <div class="gen-image flex">
     <div class="gen-image__left flex-shrink-0 p-4 bg-white">
       <div class="flex gap-4">
-        <div>
-          <label class="block text-sm font-medium leading-6 text-gray-900">宽度</label>
-          <input
-            v-model="width"
-            type="text"
-            class="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          >
-        </div>
-        <div>
-          <label class="block text-sm font-medium leading-6 text-gray-900">高度</label>
-          <input
-            v-model="height"
-            type="text"
-            class="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          >
-        </div>
+        <v-text-field v-model="width" label="宽度" variant="solo-filled" />
+        <v-text-field v-model="height" label="高度" variant="solo-filled" />
       </div>
-      <button class="gen-image__button rounded-md my-5 border-slate-400" @click="genImg">
+      <VBtn block class="my-4" @click="genImg">
         生成
-      </button>
+      </VBtn>
       <div
         v-for="(val, key) in presetColor"
         :key="key"
@@ -99,9 +86,9 @@ function handleSelectColor(key: any) {
     </div>
     <div class="gen-image__right flex-1 p-4 flex items-center justify-center">
       <div ref="wrap" class="gen-image__right-content" />
-      <button class="gen-image__right-export-button border-slate-400" @click="handleExport">
+      <VBtn size="large" rounded="xl" class="gen-image__right-export-button my-4" @click="handleExport">
         导出图片
-      </button>
+      </VBtn>
     </div>
   </div>
 </template>
@@ -157,9 +144,5 @@ function handleSelectColor(key: any) {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  height: 36px;
-  width: 160px;
-  border: 1px solid;
-  border-radius: 20px;
 }
 </style>

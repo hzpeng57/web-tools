@@ -13,7 +13,8 @@
   "dependencies": {
     "trianglify": "^4.1.1",
     "vue": "^3.4.21",
-    "vue-router": "4"
+    "vue-router": "4",
+    "vuetify": "^3.5.15"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.11.6",
@@ -24,6 +25,7 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
+    "vite-plugin-vuetify": "^2.0.3",
     "vue-tsc": "^2.0.6"
   }
 }
