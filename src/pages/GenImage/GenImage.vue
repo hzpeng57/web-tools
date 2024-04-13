@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { VBtn } from 'vuetify/components/VBtn'
+import { mdiArrowLeft } from '@mdi/js'
+import router from '../../router'
 
 const trianglify = (window as any).trianglify
 const presetColor = trianglify.utils.colorbrewer
@@ -58,19 +59,23 @@ function handleExport() {
 function handleSelectColor(key: any) {
   xColors.value = key
 }
+
+function backHome() {
+  router.back()
+}
 </script>
 
 <template>
-  <div class="gen-image flex">
-    <div class="gen-image__left flex-shrink-0 p-4 bg-white">
-      <div class="flex gap-4">
+  <div class="gen-image d-flex">
+    <div class="gen-image__left flex-shrink-0  pa-4 bg-white">
+      <div class="d-flex ga-2">
         <v-text-field v-model="width" label="宽度" variant="outlined" />
         <v-text-field v-model="height" label="高度" variant="outlined" />
       </div>
-      <VBtn block size="large" class="mb-4" @click="genImg">
+      <v-btn block size="large" class="mb-4" @click="genImg">
         生成
-      </VBtn>
-      <div
+      </v-btn>
+      <v-card
         v-for="(val, key) in presetColor"
         :key="key"
         class="gen-image__color-row"
@@ -82,13 +87,25 @@ function handleSelectColor(key: any) {
           class="gen-image__color-row-item"
           :style="{ backgroundColor: color, width: `calc(100% / ${val.length})`, paddingTop: `calc(100% / ${val.length})` }"
         />
-      </div>
+      </v-card>
     </div>
-    <div class="gen-image__right flex-1 p-4 flex items-center justify-center">
+    <div class="gen-image__right flex-1-1 pa-4 d-flex align-center justify-center">
+      <v-btn
+        class="ma-2 back-btn"
+        size="large"
+        rounded="lg"
+        @click="backHome"
+      >
+        <v-icon
+          :icon="mdiArrowLeft"
+          start
+        />
+        返回
+      </v-btn>
       <div ref="wrap" class="gen-image__right-content" />
-      <VBtn size="large" rounded="xl" class="gen-image__right-export-button my-4" @click="handleExport">
+      <v-btn size="large" rounded="xl" class="gen-image__right-export-button my-4" @click="handleExport">
         导出图片
-      </VBtn>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -144,5 +161,10 @@ function handleSelectColor(key: any) {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+}
+.back-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 </style>

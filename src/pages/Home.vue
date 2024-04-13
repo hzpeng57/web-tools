@@ -3,12 +3,14 @@ import { RouteNames } from '../router/RouteName'
 </script>
 
 <template>
-  <div class="flex flex-col items-center py-40">
-    <h1 style="font-size: 46px;">
-      home
+  <div class="d-flex flex-column align-center py-16">
+    <h1 class="text-h3">
+      在线小工具
     </h1>
-    <router-link :to="{ name: RouteNames.GenImage }">
-      Gen IMage
-    </router-link>
+    <v-card>
+      <router-link :to="{ name: RouteNames.GenImage }">
+        图片生成器
+      </router-link>
+    </v-card>
   </div>
 </template>
