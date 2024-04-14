@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { mdiArrowLeft } from '@mdi/js'
+import { watchDebounced } from '@vueuse/core'
 import router from '../../router'
 
 const trianglify = (window as any).trianglify
@@ -10,11 +11,16 @@ const dpr = window.devicePixelRatio || 1
 const wrap = ref<HTMLElement>()
 const width = ref(500)
 const height = ref(500)
+const cellSize = ref(75)
+const variance = ref(0.75)
+const direction = ref(0.75)
 const xColors = ref<any>('YlGn')
 
-watch([width, height, xColors] as const, () => {
-  genImg()
-})
+watchDebounced(
+  [width, height, xColors, cellSize, variance, direction],
+  () => { genImg() },
+  { debounce: 300, maxWait: 1000 },
+)
 
 onMounted(genImg)
 
@@ -22,15 +28,15 @@ function genImg() {
   const pattern = trianglify({
     width: width.value,
     height: height.value,
-    cellSize: 75,
-    variance: 0.75,
+    cellSize: cellSize.value,
+    variance: variance.value,
     seed: null,
     xColors: presetColor[xColors.value],
     yColors: 'match',
     fill: true,
     palette: trianglify.colorbrewer,
     colorSpace: 'lab',
-    colorFunction: trianglify.colorFunctions.interpolateLinear(0.5),
+    colorFunction: trianglify.colorFunctions.interpolateLinear(direction.value),
     strokeWidth: 0,
     points: null,
   })
@@ -71,6 +77,39 @@ function backHome() {
       <div class="d-flex ga-2">
         <v-text-field v-model="width" label="宽度" variant="outlined" />
         <v-text-field v-model="height" label="高度" variant="outlined" />
+      </div>
+      <div>
+        <div class="text-caption">
+          形状大小
+        </div>
+        <v-slider
+          v-model="cellSize"
+          thumb-label
+          :max="300"
+          :min="5"
+        />
+      </div>
+      <div>
+        <div class="text-caption">
+          差异
+        </div>
+        <v-slider
+          v-model="variance"
+          thumb-label
+          :max="40"
+          :min="0"
+        />
+      </div>
+      <div>
+        <div class="text-caption">
+          方向
+        </div>
+        <v-slider
+          v-model="direction"
+          thumb-label
+          :max="1"
+          :min="0"
+        />
       </div>
       <v-btn block size="large" class="mb-4" @click="genImg">
         生成

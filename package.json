@@ -11,6 +11,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@vueuse/core": "^10.9.0",
     "trianglify": "^4.1.1",
     "vue": "^3.4.21",
     "vue-router": "4",
